@@ -25,4 +25,3 @@ Things you may want to cover:
 =======
 # BugZilla
 BugZilla Ruby on Rails Project
->>>>>>> e2eca2268935355b61da5e625cd119ba6c2c3212
