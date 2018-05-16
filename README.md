@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -22,3 +23,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+=======
+# BugZilla
+BugZilla Ruby on Rails Project
+>>>>>>> e2eca2268935355b61da5e625cd119ba6c2c3212
