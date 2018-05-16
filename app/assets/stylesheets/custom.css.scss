@@ -1,0 +1,67 @@
+
+// make changes here
+//$navbar-default-bg: rgba(14, 138, 24, 0.84);
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+#logo {
+  float: left;
+  font-size: 1.7em;
+  color: #F7F7F7;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+#logo:hover {
+  color: #F7F7F7;
+  text-decoration: none;
+}
+
+.center{
+  text-align: center;
+}
+
+.description {
+  margin-top: 0;
+}
+
+.project-title {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.project-body {
+  border-top: 1px solid #eaeaea;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.project-actions {
+  border-top: 1px solid #eaeaea;
+  padding-top: 5px;
+}
+
+.footer{
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #777;
+}
+
+footer a:hover{
+  color: #222;
+}
+
+footer small{
+  float: left;
+}
+
+footer ul{
+  float: right;
+  list-style: none;
+}
+footer ul li{
+  float: left;
+  margin-left: 15px;
+}
