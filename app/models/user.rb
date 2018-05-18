@@ -8,4 +8,6 @@ class User < ApplicationRecord
 
   has_many :user_proj_assocs
   has_many :projects, through: :user_proj_assocs
+
+  has_many :bugs
 end
