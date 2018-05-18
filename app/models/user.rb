@@ -3,5 +3,5 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  enum user_type: [ :developer, :manager, :qa ]
+  enum user_type: %i[ Developer Manager QA ]
 end
