@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  load_and_authorize_resource
   def index
     @projects = Project.all
   end
@@ -21,7 +22,6 @@ class ProjectsController < ApplicationController
   def create
     #render plain: params[:project].inspect
     @project = Project.new(project_params)
-
     if @project.save
       flash[:success] = "Project was Successfuly Added!"
       redirect_to projects_path(@project)
