@@ -1,4 +1,7 @@
 class Project < ApplicationRecord
+  has_many :user_proj_assocs
+  has_many :users, through: :user_proj_assocs
+
   validates :title,
             presence: true,
             length: {minimum: 3, maximum: 50}
