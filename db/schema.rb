@@ -10,16 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_18_081801) do
-
-  create_table "bug_assocs", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "project_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["project_id"], name: "index_bug_assocs_on_project_id"
-    t.index ["user_id"], name: "index_bug_assocs_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2018_05_18_081247) do
 
   create_table "bugs", force: :cascade do |t|
     t.string "title"
