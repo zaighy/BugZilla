@@ -3,6 +3,7 @@
 <div class="row">
   <div class="col-xs-12">
     <%= form_for(@project, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+
       <div class="form-group">
         <div class="control-label col-sm-2">
           <%= f.label :title %>
@@ -20,11 +21,25 @@
           <%= f.text_area :description, rows:10, class: "form-control", placeholder: "Body of Article" %>
         </div>
       </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <%= f.submit class: 'btn btn-primary btn-lg' %>
-          </div>
+      <div class="form-group">
+        <label for="developer_select" class="control-label col-sm-2">Select Developers</label>
+        <div class="col-sm-8">
+          <%= f.select :user_ids, @dev_ops, {}, {multiple: true, class: "form-control"} %>
         </div>
+      </div>
+
+      <div class="form-group">
+        <label for="qa_select" class="control-label col-sm-2">Select QA Team</label>
+        <div class="col-sm-8">
+          <%= f.select :user_ids, @qa_ops, {}, {multiple: true, class: "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <%= f.submit class: 'btn btn-primary btn-lg' %>
+        </div>
+      </div>
     <% end %>
   <div class="col-xs-4 col-xs-offset-5">
     [ <%= link_to "Cancel and return to Projects", projects_path %> ]

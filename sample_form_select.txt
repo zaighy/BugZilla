@@ -1,0 +1,25 @@
+<div class="form-group">
+        <label for="qa_select" class="control-label col-sm-2">Select QA Team</label>
+        <div class="col-sm-8">
+          <select multiple class="form-control" id="qa_select">
+            <% for user in User.all do %>
+              <% if user.has_role? :QA %>
+                <%= content_tag(:option, user.name) %>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="developer_select" class="control-label col-sm-2">Select Developers</label>
+        <div class="col-sm-8">
+          <select multiple class="form-control" id="developer_select">
+            <% for user in User.all do %>
+              <% if user.has_role? :Developer %>
+                <%= content_tag(:option, user.name) %>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
