@@ -2,12 +2,12 @@
 
 one:
   title: MyString
-  deadline: MyString
   type: 
   status: MyString
+  deadline: MyString
 
 two:
   title: MyString
-  deadline: MyString
   type: 
   status: MyString
+  deadline: MyString
