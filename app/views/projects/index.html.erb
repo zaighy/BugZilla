@@ -16,6 +16,7 @@
           <%= link_to "Delete this Project", project_path(project),
                       method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
+          <%= link_to "Manage Bugs for this Project", project_bugs_path(project), class: "btn btn-xs btn-warning" %>
         </div>
       </div>
     </div>

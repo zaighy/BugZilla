@@ -42,6 +42,31 @@
   padding-top: 5px;
 }
 
+.bug-title{
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+.bug-type{
+  border-top: 1px solid #eaeaea;
+  padding-top: 15px;
+  padding-bottom: 2px;
+}
+.bug-status{
+  border-top: 1px solid #eaeaea;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.bug-deadline{
+  border-top: 1px solid #eaeaea;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.bug-lbls{
+  font-size: 1.2em;
+  padding-right: 15px;
+}
+
 .footer{
   margin-top: 45px;
   padding-top: 5px;
