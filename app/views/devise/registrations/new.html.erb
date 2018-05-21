@@ -27,7 +27,7 @@
       <div class="form-group">
         <%= f.label "User Type", class: 'control-label col-sm-2' %>
         <div class="col-sm-8">
-          <%= f.select(:user_type, options_for_select(['Developer', 'Manager', 'QA']), {},  class: "btn btn-secondary dropdown-toggle") %>
+          <%= f.select(:roles, options_from_collection_for_select(Role.all,"name","name"), {},  class: "btn btn-secondary dropdown-toggle") %>
         </div>
       </div>
 

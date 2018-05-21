@@ -31,3 +31,10 @@
 
 en:
   hello: "Hello world"
+  unauthorized:
+    default: "Not authorized for this action"
+    manage:
+      all: "Not authorized for action : %{action} %{subject}"
+      user: "Not allowed to manage other user accounts"
+    update:
+      project: "Not allowed to update this project"

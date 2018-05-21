@@ -1,7 +1,11 @@
 class ProjectsController < ApplicationController
+
   load_and_authorize_resource
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to projects_path, alert: exception.message
+  end
   def index
-    @projects = Project.all
+    @projects = current_user.projects.all unless current_user.has_role?(:Manager) || current_user.has_role?(:QA)
   end
 
   def new

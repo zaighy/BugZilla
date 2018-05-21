@@ -1,4 +1,5 @@
 class Project < ApplicationRecord
+
   has_many :user_proj_assocs
   has_many :users, through: :user_proj_assocs
 
@@ -10,4 +11,5 @@ class Project < ApplicationRecord
   validates :description,
             presence: true,
             length: {minimum: 10, maximum: 300}
+  resourcify
 end

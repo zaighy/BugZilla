@@ -4,14 +4,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
-  private
+  def create
+    @user = User.new(sign_up_params)
+    @user.add_role params[:user][:roles]
+    super
+  end
+  def update
+    @user.roles = []
+    @user.add_role params[:user][:roles]
+    super
+  end
 
+  private
   def sign_up_params
-    params.require(:user).permit(:name, :email, :user_type, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 
   def account_update_params
-    params.require(:user).permit(:name, :email, :user_type, :password, :password_confirmation, :current_password)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :current_password)
   end
 
   # GET /resource/sign_up
@@ -25,9 +35,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+
 
   # PUT /resource
   # def update
