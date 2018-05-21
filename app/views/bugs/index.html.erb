@@ -31,6 +31,7 @@
           <%= link_to "Delete this Project", [bug.project, bug],
                       method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
+          <%= link_to "Assign this Bug", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
         </div>
       </div>
     </div>

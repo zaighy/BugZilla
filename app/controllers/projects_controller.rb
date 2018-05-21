@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   load_and_authorize_resource
-
+  before_action :check_user, except: [:index]
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to projects_path, alert: exception.message
   end
@@ -70,10 +70,18 @@ class ProjectsController < ApplicationController
   end
 
   def show
+
     @project = Project.find(params[:id])
   end
 
   private
+
+  def check_user
+    if ! @project.users.include? current_user
+      flash[:danger] = 'Unauthorized'
+      redirect_to projects_path
+    end
+  end
 
   def project_params
     #allow the object to create instance
