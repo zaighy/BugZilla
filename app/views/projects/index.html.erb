@@ -6,7 +6,11 @@
       <div class="well well-lg">
         <div class="project-title">
           <%= link_to project.title, project_path(project) %>
-          <label class="label author_labels"><%= project.users.first.name%></label>
+          <label class="label author_labels">
+            <%= if !can? :manage, @project
+                  project.users.first.name
+                end %>
+          </label>
         </div>
         <div class="project-body">
           <%= truncate(project.description, length: 100) %>

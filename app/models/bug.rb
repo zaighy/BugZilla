@@ -2,10 +2,9 @@ class Bug < ApplicationRecord
     belongs_to :user
     belongs_to :project
 
-    enum bug_typee: %i[ Feature Bug ]
-    enum bug_status: %i[ New_Bug Started_Bug Resolved ]
-    enum feature_status: %i[ New_Feature Started_Feature Completed ]
-
+    enum bug_type_list: %i[ Feature Bug ]
+    enum bug_status_list: %i[ New Started ]
+    enum bug_feat_status: %i[ Completed Resolved ]
     validates_uniqueness_of :title,
                             message: 'This Title Already Exists'
     validates_presence_of :status,

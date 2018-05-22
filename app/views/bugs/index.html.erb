@@ -12,16 +12,21 @@
     <% @bugs.each do |bug|  %>
       <tr>
         <td><%= link_to bug.title, [bug.project, bug] %></td>
-        <td><%= bug.bug_type %></td>
-        <td><%= bug.deadline %></td>
-        <td><%= bug.status %></td>
+        <td><%= Bug.bug_type_lists.invert[bug.bug_type.to_i] rescue bug.bug_type %></td>
+        <td><%= bug.deadline.strftime("%d-%m-%Y") rescue bug.deadline%></td>
+        <td><%= Bug.bug_status_lists.invert[bug.status.to_i] rescue bug.status %></td>
         <td><%= bug.user.name %></td>
         <td class="bug-actions">
-          <%= link_to "Edit this Bug", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
-          <%= link_to "Delete this Bug", [bug.project, bug],
+          <%= link_to "Edit this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
+          <%= link_to "Delete this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", [bug.project, bug],
                       method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
-          <%= link_to "Assign this Bug", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+          <% if can? :update, @bug %>
+            <%= link_to "Assign this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+          <% end %>
+
+
+          <%= link_to "Mark as #{Bug.bug_feat_statuses.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
         </td>
       </tr>
     <% end %>
@@ -34,4 +39,4 @@
     </tr>
   </tfoot>
 </table>
-<%= link_to 'New Bug', new_project_bug_path,class: "btn btn-md btn-primary" %>
+<%= link_to 'New Bug', new_project_bug_path, class: "btn btn-md btn-primary" %>

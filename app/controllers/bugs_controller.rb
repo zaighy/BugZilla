@@ -1,10 +1,21 @@
 class BugsController < ApplicationController
   before_action :set_bug, only: [:show, :edit, :update, :destroy]
   before_action :set_project
+  load_and_authorize_resource
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to project_bugs_path, alert: exception.message
+  end
+
   # GET /bugs
   # GET /bugs.json
   def index
     @bugs = @project.bugs
+  end
+
+  def assign_bug
+    @bug = @project.bugs.find(params[:id])
+
   end
 
   # GET /bugs/1
@@ -16,11 +27,13 @@ class BugsController < ApplicationController
   # GET /bugs/new
   def new
     @bug = @project.bugs.build
+
   end
 
   # GET /bugs/1/edit
   def edit
     @bug = @project.bugs.find(params[:id])
+
   end
 
   # POST /bugs

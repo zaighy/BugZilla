@@ -1,38 +1,46 @@
-<%= form_for([@bug.project, @bug]) do |form| %>
+<%= render 'shared/errors', obj: @bug %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for([@bug.project, @bug], html: {class: "form-horizontal", role: "form"}) do |f| %>
+      <hr>
+      <div class="form-group">
+        <div class="control-label col-sm-2">
+          <%= f.label :title %>
+        </div>
+        <div class="col-sm-8">
+          <%= f.text_field :title, class: "form-control", placeholder: "Title of Bug", autofocus: true%>
+        </div>
+      </div>
 
-  <% if @bug.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@bug.errors.count, "error") %> prohibited this bug from being saved:</h2>
+      <div class="form-group">
+        <%= f.label :bug_type, class: 'control-label col-sm-2' %>
+        <div class="col-sm-8">
+          <%= f.select(:bug_type, options_for_select(Bug.bug_type_lists, @bug.bug_type), {}, id: 'bug-type-field',class: "btn btn-secondary dropdown-toggle") %>
+        </div>
+      </div>
 
-      <ul>
-      <% @bug.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <div class="form-group">
+        <%= f.label :status, class: 'control-label col-sm-2' %>
+        <div class="col-sm-8">
+          <%= f.select(:status, options_for_select(Bug.bug_status_lists, @bug.status), {}, id: 'bug-type-field', class: "btn btn-secondary dropdown-toggle") %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :deadline, class: 'control-label col-sm-2', for: 'date' %>
+        <div class="col-sm-8">
+          <%= f.text_field :deadline, id: "deadline", class: "form-control", placeholder: "dd/mm/yyyy" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <%= f.submit class: 'btn btn-primary btn-md' %>
+        </div>
+      </div>
+    <% end %>
+    <div class="col-xs-4 col-xs-offset-5">
+      [ <%= link_to "Return to Bugs", project_bugs_path(@bug.project) %> ]
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
   </div>
-
-  <div class="field">
-    <%= form.label :bug_type %>
-    <%= form.text_field :bug_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :deadline %>
-    <%= form.text_field :deadline %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

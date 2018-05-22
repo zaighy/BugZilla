@@ -1,24 +1,23 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @bug.title %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @bug.bug_type %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @bug.status %>
-</p>
-
-<p>
-  <strong>Deadline:</strong>
-  <%= @bug.deadline %>
-</p>
-
-<%= link_to 'Edit', edit_project_bug_path(@bug.project, @bug) %> |
-<%= link_to 'Back', project_bugs_path(@bug.project) %>
+<h2 align="center">Title: <%= @bug.title %></h2>
+<div class="well col-xs-8 col-xs-offset-2">
+  <h4 class="description"><strong>Type</strong></h4>
+    <%= Bug.bug_type_lists.invert[@bug.bug_type.to_i] rescue @bug.bug_type %>
+  <hr>
+  <h4 class="description"><strong>Status</strong></h4>
+    <%= Bug.bug_status_lists.invert[@bug.status.to_i] rescue @bug.status %>
+  <hr>
+  <h4 class="description"><strong>Deadline</strong></h4>
+    <%= @bug.deadline.strftime('%d-%m-%Y') rescue @bug.deadline %>
+  <hr>
+  <td class="bug-actions">
+    <%= link_to "Edit this Bug", edit_project_bug_path(@bug.project, @bug), class: "btn btn-xs btn-primary" %>
+    <%= link_to "Delete this Bug", [@bug.project, @bug],
+                method: :delete, data: {confirm: "Are you sure?"},
+                class: "btn btn-xs btn-danger" %>
+    <%= link_to "Assign this Bug", edit_project_bug_path(@bug.project, @bug), class: "btn btn-xs btn-success" %>
+  </td>
+</div>
+<div class="col-xs-4 col-xs-offset-5">
+  [ <%= link_to "Return to Bugs", project_bugs_path(@bug.project) %> ]
+</div>

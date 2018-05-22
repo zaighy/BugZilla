@@ -10,11 +10,14 @@ class Ability
     if user.has_role? :Manager
       can :manage, :all
     elsif user.has_role? :Developer
+      can :update, Bug
       can :read, :all
     elsif user.has_role? :QA
-      can :update, :all
+      can :update, Bug
       can :read, :all
     end
+
+
     #
     #   user ||= User.new # guest user (not logged in)
     #   if user.admin?
