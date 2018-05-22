@@ -13,7 +13,7 @@ class Ability
       can :update, Bug
       can :read, :all
     elsif user.has_role? :QA
-      can :update, Bug
+      can :manage, Bug
       can :read, :all
     end
 

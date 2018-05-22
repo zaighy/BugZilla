@@ -13,11 +13,6 @@ class BugsController < ApplicationController
     @bugs = @project.bugs
   end
 
-  def assign_bug
-    @bug = @project.bugs.find(params[:id])
-
-  end
-
   # GET /bugs/1
   # GET /bugs/1.json
   def show
@@ -33,6 +28,29 @@ class BugsController < ApplicationController
   # GET /bugs/1/edit
   def edit
     @bug = @project.bugs.find(params[:id])
+
+  end
+
+  # GET /bugs/1/assign_bug
+  def assign_bug
+    @bug = @project.bugs.find(params[:id])
+  end
+
+  # GET /bugs/1/mark_status
+  def mark_status
+    @bug = Bug.find(params[:bug_id])
+    if @bug.bug_type == "Feature"
+      lbl = "Completed"
+    elsif @bug.bug_type == "Bug"
+      lbl = "Resolved"
+    end
+    respond_to do |ff|
+      if @bug.update(status: lbl)
+        ff.html { redirect_to project_bugs_path, notice: "#{@bug.bug_type} was marked as #{lbl}"}
+      else
+        ff.html { render :index}
+      end
+    end
 
   end
 

@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :projects do
     resources :bugs do
-      get	"assign",	as:	'assign_bug'
+      get	"assign"
+      get "mark_status"
     end
   end
 end

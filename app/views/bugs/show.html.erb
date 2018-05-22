@@ -2,10 +2,10 @@
 <h2 align="center">Title: <%= @bug.title %></h2>
 <div class="well col-xs-8 col-xs-offset-2">
   <h4 class="description"><strong>Type</strong></h4>
-    <%= Bug.bug_type_lists.invert[@bug.bug_type.to_i] rescue @bug.bug_type %>
+    <%= @bug.bug_type %>
   <hr>
   <h4 class="description"><strong>Status</strong></h4>
-    <%= Bug.bug_status_lists.invert[@bug.status.to_i] rescue @bug.status %>
+    <%= @bug.status %>
   <hr>
   <h4 class="description"><strong>Deadline</strong></h4>
     <%= @bug.deadline.strftime('%d-%m-%Y') rescue @bug.deadline %>

@@ -12,21 +12,38 @@
     <% @bugs.each do |bug|  %>
       <tr>
         <td><%= link_to bug.title, [bug.project, bug] %></td>
-        <td><%= Bug.bug_type_lists.invert[bug.bug_type.to_i] rescue bug.bug_type %></td>
+        <td><%= bug.bug_type %></td>
         <td><%= bug.deadline.strftime("%d-%m-%Y") rescue bug.deadline%></td>
-        <td><%= Bug.bug_status_lists.invert[bug.status.to_i] rescue bug.status %></td>
+        <td><%= bug.status %></td>
         <td><%= bug.user.name %></td>
         <td class="bug-actions">
-          <%= link_to "Edit this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
-          <%= link_to "Delete this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", [bug.project, bug],
+
+          <%= link_to "Edit this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
+
+          <%= link_to "Delete this #{bug.bug_type}", [bug.project, bug],
                       method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
+
           <% if can? :update, @bug %>
-            <%= link_to "Assign this #{Bug.bug_type_lists.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+            <%= link_to "Assign this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
           <% end %>
 
+          <%
+            if bug.bug_type == "Feature"
+              lbl = "Completed"
+            elsif bug.bug_type == "Bug"
+              lbl = "Resolved"
+            else
+              lbl = nil
+            end
+          %>
 
-          <%= link_to "Mark as #{Bug.bug_feat_statuses.invert[bug.bug_type.to_i]}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+          <% if (bug.status != "Completed" && bug.bug_type == "Feature") ||
+                (bug.status != "Resolved" && bug.bug_type == "Bug") %>
+            <%= link_to "Mark as #{lbl}",
+                      project_bug_mark_status_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+          <% end %>
+
         </td>
       </tr>
     <% end %>
