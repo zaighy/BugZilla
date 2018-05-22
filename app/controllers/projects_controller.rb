@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
 
   load_and_authorize_resource
-  before_action :check_user, except: [:index]
+  before_action :check_user, except: [:index, :new, :create]
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to projects_path, alert: exception.message
   end
@@ -78,7 +78,7 @@ class ProjectsController < ApplicationController
 
   def check_user
     if ! @project.users.include? current_user
-      flash[:danger] = 'Unauthorized'
+      flash[:danger] = 'Unauthorized! You are only allowed to view your projects'
       redirect_to projects_path
     end
   end
