@@ -42,10 +42,11 @@ class ProjectsController < ApplicationController
     #render plain: params[:project].inspect
     # @project = current_user.projects.new(project_params)
     users = project_params[:user_ids]
+    # curent_user.projects.new(users )
     users.push current_user.id.to_s
     final_params = project_params.merge(user_ids: users)
     @project = Project.new(final_params)
-
+    @project.created_by = current_user.id
     if @project.save
       flash[:success] = "Project was Successfuly Added!"
       redirect_to projects_path(@project)
@@ -70,7 +71,6 @@ class ProjectsController < ApplicationController
   end
 
   def show
-
     @project = Project.find(params[:id])
   end
 

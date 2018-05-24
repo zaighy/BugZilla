@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_22_092311) do
+ActiveRecord::Schema.define(version: 2018_05_24_105448) do
 
 # Could not dump table "bugs" because of following StandardError
 #   Unknown type '' for column 'project_id'
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2018_05_22_092311) do
     t.text "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "created_by"
   end
 
   create_table "projects_users", force: :cascade do |t|

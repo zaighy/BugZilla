@@ -7,14 +7,19 @@ class Ability
       user ||= User.new
     end
 
+    alias_action :assign_bug, :to => :update
     if user.has_role? :Manager
-      can :manage, :all
+      can :manage, Project
+      can :read, Bug
+
     elsif user.has_role? :Developer
-      can :update, Bug
       can :read, :all
+      can :assign_bug, Bug
+
     elsif user.has_role? :QA
-      can :manage, Bug
       can :read, :all
+      can :manage, Bug
+      cannot :assign_bug, Bug
     end
 
 

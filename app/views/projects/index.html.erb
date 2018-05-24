@@ -7,8 +7,8 @@
         <div class="project-title">
           <%= link_to project.title, project_path(project) %>
           <label class="label author_labels">
-            <%= if !can? :manage, @project
-                  project.users.first.name
+            <%= if !can? :manage, Project
+                  User.find(project.created_by.to_i).name
                 end %>
           </label>
         </div>

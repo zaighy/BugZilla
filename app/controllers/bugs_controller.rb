@@ -1,7 +1,7 @@
 class BugsController < ApplicationController
   before_action :set_bug, only: [:show, :edit, :update, :destroy]
   before_action :set_project
-  load_and_authorize_resource
+  # load_and_authorize_resource
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to project_bugs_path, alert: exception.message
@@ -28,12 +28,18 @@ class BugsController < ApplicationController
   # GET /bugs/1/edit
   def edit
     @bug = @project.bugs.find(params[:id])
-
   end
 
-  # GET /bugs/1/assign_bug
-  def assign_bug
-    @bug = @project.bugs.find(params[:id])
+  # GET /bugs/1/assign
+  def assign
+    @bug = Bug.find(params[:bug_id])
+    respond_to do |ff|
+      if @bug.update(assigned_to: current_user.id)
+        ff.html { redirect_to project_bugs_path, notice: "#{@bug.bug_type} was assigned to #{current_user.name}"}
+      else
+        ff.html { render :index}
+      end
+    end
   end
 
   # GET /bugs/1/mark_status

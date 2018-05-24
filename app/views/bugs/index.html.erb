@@ -19,13 +19,14 @@
         <td class="bug-actions">
 
           <%= link_to "Edit this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
-
-          <%= link_to "Delete this #{bug.bug_type}", [bug.project, bug],
+          <% if can? :destroy, Bug %>
+            <%= link_to "Delete this #{bug.bug_type}", [bug.project, bug],
                       method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
-
-          <% if can? :update, @bug %>
-            <%= link_to "Assign this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+          <% end %>
+          <% if (can? :assign_bug, Bug) && (bug.assigned_to != current_user.id.to_s &&
+                                        bug.assigned_to.nil?)  %>
+            <%= link_to "Assign this #{bug.bug_type}", project_bug_assign_path(bug.project, bug), class: "btn btn-xs btn-success" %>
           <% end %>
 
           <%
@@ -56,4 +57,11 @@
     </tr>
   </tfoot>
 </table>
-<%= link_to 'New Bug', new_project_bug_path, class: "btn btn-md btn-primary" %>
+<% if can? :manage, Bug %>
+  <div>
+  <%= link_to 'New Bug', new_project_bug_path, class: "btn btn-md btn-primary" %>
+  </div>
+<% end %>
+<div class="col-xs-4 col-xs-offset-5">
+  [ <%= link_to "Return to Projects", projects_path %> ]
+</div>
