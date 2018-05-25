@@ -11,11 +11,22 @@
     <%= @bug.deadline.strftime('%d-%m-%Y') rescue @bug.deadline %>
   <hr>
   <td class="bug-actions">
-    <%= link_to "Edit this Bug", edit_project_bug_path(@bug.project, @bug), class: "btn btn-xs btn-primary" %>
-    <%= link_to "Delete this Bug", [@bug.project, @bug],
-                method: :delete, data: {confirm: "Are you sure?"},
-                class: "btn btn-xs btn-danger" %>
-    <%= link_to "Assign this Bug", edit_project_bug_path(@bug.project, @bug), class: "btn btn-xs btn-success" %>
+
+    <% if (@bug.assigned_to == current_user.id.to_s) || (can? :update, Bug) %>
+      <%= link_to "Edit this #{@bug.bug_type}", edit_project_bug_path(@bug.project, @bug), class: "btn btn-xs btn-primary" %>
+    <% end %>
+
+    <% if can? :destroy, Bug %>
+      <%= link_to "Delete this Bug", [@bug.project, @bug],
+                  method: :delete, data: {confirm: "Are you sure?"},
+                  class: "btn btn-xs btn-danger" %>
+    <% end %>
+
+    <% if (can? :assign_me, Bug) && (@bug.assigned_to != current_user.id.to_s &&
+        @bug.assigned_to.nil?) %>
+      <%= link_to "Assign this #{@bug.bug_type}", project_bug_assign_me_path(@bug.project, @bug), class: "btn btn-xs btn-success" %>
+    <% end %>
+
   </td>
 </div>
 <div class="col-xs-4 col-xs-offset-5">

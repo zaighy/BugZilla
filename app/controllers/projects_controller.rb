@@ -56,7 +56,6 @@ class ProjectsController < ApplicationController
   end
 
   def update
-
     users = project_params[:user_ids]
     users.push current_user.id.to_s
     final_params = project_params.merge(user_ids: users)

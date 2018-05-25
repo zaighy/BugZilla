@@ -7,6 +7,11 @@
     <% tbl_headings.each do |heading| %>
       <th><%= heading %></th>
     <% end %>
+    <% if current_user.has_role? :QA %>
+      <th>Assigned To</th>
+    <% end %>
+  </tr>
+
   </thead>
   <tbody>
     <% @bugs.each do |bug|  %>
@@ -17,16 +22,18 @@
         <td><%= bug.status %></td>
         <td><%= bug.user.name %></td>
         <td class="bug-actions">
+          <% if (bug.assigned_to == current_user.id.to_s) || (can? :edit, Bug) %>
+            <%= link_to "Edit this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
+          <% end %>
 
-          <%= link_to "Edit this #{bug.bug_type}", edit_project_bug_path(bug.project, bug), class: "btn btn-xs btn-primary" %>
           <% if can? :destroy, Bug %>
             <%= link_to "Delete this #{bug.bug_type}", [bug.project, bug],
-                      method: :delete, data: {confirm: "Are you sure?"},
+                    method: :delete, data: {confirm: "Are you sure?"},
                       class: "btn btn-xs btn-danger" %>
           <% end %>
-          <% if (can? :assign_bug, Bug) && (bug.assigned_to != current_user.id.to_s &&
+          <% if (can? :assign_me, Bug) && (bug.assigned_to != current_user.id.to_s &&
                                         bug.assigned_to.nil?)  %>
-            <%= link_to "Assign this #{bug.bug_type}", project_bug_assign_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+            <%= link_to "Assign this #{bug.bug_type}",  project_bug_assign_me_path(bug.project, bug), class: "btn btn-xs btn-success" %>
           <% end %>
 
           <%
@@ -46,6 +53,11 @@
           <% end %>
 
         </td>
+        <% if current_user.has_role? :QA %>
+          <td>
+            <%= User.find(bug.assigned_to.to_i).name %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -53,6 +65,9 @@
     <tr>
       <% tbl_headings.each do |heading| %>
         <th><%= heading %></th>
+      <% end %>
+      <% if current_user.has_role? :QA %>
+        <th>Assigned To</th>
       <% end %>
     </tr>
   </tfoot>

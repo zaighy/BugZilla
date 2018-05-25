@@ -1,7 +1,7 @@
 class BugsController < ApplicationController
   before_action :set_bug, only: [:show, :edit, :update, :destroy]
   before_action :set_project
-  # load_and_authorize_resource
+  authorize_resource class: false
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to project_bugs_path, alert: exception.message
@@ -30,8 +30,8 @@ class BugsController < ApplicationController
     @bug = @project.bugs.find(params[:id])
   end
 
-  # GET /bugs/1/assign
-  def assign
+  # GET /bugs/1/assign_me
+  def assign_me
     @bug = Bug.find(params[:bug_id])
     respond_to do |ff|
       if @bug.update(assigned_to: current_user.id)
@@ -79,6 +79,7 @@ class BugsController < ApplicationController
   # PATCH/PUT /bugs/1
   # PATCH/PUT /bugs/1.json
   def update
+
     @bug = @project.bugs.find(params[:id])
 
     respond_to do |format|
