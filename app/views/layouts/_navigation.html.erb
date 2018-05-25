@@ -21,6 +21,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
+          <li><%= image_tag @user.image.thumb.url class: "pull-right" rescue ""%></li>
           <li class="dropdown">
             <%= link_to edit_user_registration_url,
                         {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', 'role' => 'button',
@@ -28,6 +29,7 @@
               <%= current_user.name %>
               <span class="caret"></span>
             <% end %>
+
             <ul class="dropdown-menu">
               <li></li>
               <li><%= link_to "Edit Account", edit_user_registration_url %></li>

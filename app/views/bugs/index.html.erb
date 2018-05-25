@@ -33,7 +33,7 @@
           <% end %>
           <% if (can? :assign_me, Bug) && (bug.assigned_to != current_user.id.to_s &&
                                         bug.assigned_to.nil?)  %>
-            <%= link_to "Assign this #{bug.bug_type}",  project_bug_assign_me_path(bug.project, bug), class: "btn btn-xs btn-success" %>
+            <%= link_to "Assign this #{bug.bug_type}",  project_bug_assign_me_path(bug.project, bug),id: 'assign-link', remote: true, class: "btn btn-xs btn-success" %>
           <% end %>
 
           <%
@@ -46,8 +46,8 @@
             end
           %>
 
-          <% if (bug.status != "Completed" && bug.bug_type == "Feature") ||
-                (bug.status != "Resolved" && bug.bug_type == "Bug") %>
+          <% if ((bug.status != "Completed" && bug.bug_type == "Feature") ||
+                (bug.status != "Resolved" && bug.bug_type == "Bug")) && ((can? :update, Bug) || (can? :manage, Bug)) %>
             <%= link_to "Mark as #{lbl}",
                       project_bug_mark_status_path(bug.project, bug), class: "btn btn-xs btn-success" %>
           <% end %>
@@ -55,7 +55,7 @@
         </td>
         <% if current_user.has_role? :QA %>
           <td>
-            <%= User.find(bug.assigned_to.to_i).name %>
+            <%= User.find(bug.assigned_to.to_i).name rescue ""%>
           </td>
         <% end %>
       </tr>
@@ -72,7 +72,7 @@
     </tr>
   </tfoot>
 </table>
-<% if can? :manage, Bug %>
+<% if can? :manage, :bug %>
   <div>
   <%= link_to 'New Bug', new_project_bug_path, class: "btn btn-md btn-primary" %>
   </div>

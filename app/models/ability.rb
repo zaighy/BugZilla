@@ -20,11 +20,12 @@ class Ability
       can :read, :all
 
     elsif user.has_role? :QA
-
+      can :manage, :bug
       can :read, :all
       can :manage, Bug
+
       can :mark_status, :all
-      cannot :assign_me, :all
+
 
     end
 

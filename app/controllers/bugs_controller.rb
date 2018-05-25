@@ -32,10 +32,11 @@ class BugsController < ApplicationController
 
   # GET /bugs/1/assign_me
   def assign_me
+
     @bug = Bug.find(params[:bug_id])
     respond_to do |ff|
       if @bug.update(assigned_to: current_user.id)
-        ff.html { redirect_to project_bugs_path, notice: "#{@bug.bug_type} was assigned to #{current_user.name}"}
+        ff.html { redirect_to assign_bug_path, notice: "#{@bug.bug_type} was assigned to #{current_user.name}"}
       else
         ff.html { render :index}
       end
@@ -63,6 +64,7 @@ class BugsController < ApplicationController
   # POST /bugs
   # POST /bugs.json
   def create
+
     @bug = @project.bugs.create(bug_params.merge(user_id: current_user.id, project_id: @project.id))
 
     respond_to do |format|
